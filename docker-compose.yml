@@ -1,0 +1,14 @@
+version: '3'
+services:
+  loggo:
+    build: .
+    image: ${CONTAINER_REGISTRY_PATH:-rvadim/loggo}:${IMAGE_VERSION:-latest}
+  redis:
+    image: redis:5.0
+    ports:
+      - "6379:6379"
+  rabbit:
+    image: rabbitmq:3.8-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
