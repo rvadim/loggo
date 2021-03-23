@@ -97,7 +97,7 @@ func (f *Finder) GetAllContainers() ([]*Container, error) {
 		subdirs, err := getAllDirectories(subdir)
 		if err != nil {
 			log.Printf("Unable to get all directories in '%s', due to '%s'", f.logsPath, err)
-			return containers, err
+			continue
 		}
 
 		for _, dir := range subdirs {

@@ -78,9 +78,9 @@ func (s *Service) Start() {
 		}
 		containers, err := s.finder.GetAllContainers()
 		if err != nil {
-			log.Printf("Unable to get containers list due to '%s'", err)
-			s.Stop()
-			return
+			log.Printf("Unable to get containers list due to %q", err)
+			time.Sleep(time.Duration(s.cfg.DirRereadIntervalSec) * time.Second)
+			continue
 		}
 		for _, container := range containers {
 			if s.isNeedToSpawnProcess(container, isFirstIteration) {
