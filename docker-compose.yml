@@ -7,8 +7,18 @@ services:
     image: redis:5.0
     ports:
       - "6379:6379"
+    command:    
+    - redis-server
+    - /redis.conf
+    volumes:
+      - "./redis.conf:/redis.conf"
   rabbit:
     image: rabbitmq:3.8-management
     ports:
       - "5672:5672"
       - "15672:15672"
+  logstash:
+    image: logstash:7.12.1
+    volumes:
+      - "./logstash.conf:/usr/share/logstash/pipeline/logstash.conf"
+

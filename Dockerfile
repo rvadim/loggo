@@ -1,11 +1,10 @@
-FROM golang:1.14.9 as build
+FROM golang:1.15.12 as build
 
 COPY . /app
 RUN mkdir -p /app/build
 
 WORKDIR /app
 
-RUN go mod download
 RUN go build -o build/loggo cmd/loggo/main.go
 
 FROM ubuntu:20.04

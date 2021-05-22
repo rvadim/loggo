@@ -158,7 +158,7 @@ func runTests(c config) {
 }
 
 func runRedisTests(c config) {
-	client, err := redisclient.New(c.redisURL, c.redisKey)
+	client, err := redisclient.New(c.redisURL, c.redisKey, "test")
 	if err != nil {
 		log.Fatalf("Unable to init redis client. %s", err)
 	}
@@ -173,7 +173,6 @@ func runRedisTests(c config) {
 		if err != nil {
 			log.Fatalf("Receive failed: %s", err)
 		}
-
 		l := &nginxLog{}
 		err = json.Unmarshal(message, l)
 		if err != nil {
