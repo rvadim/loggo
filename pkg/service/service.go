@@ -2,13 +2,13 @@ package service
 
 import (
 	"log"
+	"rvadim/loggo/pkg/metrics"
 	"sync"
 	"time"
 
 	"rvadim/loggo/pkg/config"
 	"rvadim/loggo/pkg/containerd"
 	"rvadim/loggo/pkg/docker"
-	"rvadim/loggo/pkg/metrics"
 	"rvadim/loggo/pkg/parser"
 	"rvadim/loggo/pkg/reader"
 	"rvadim/loggo/pkg/storage"

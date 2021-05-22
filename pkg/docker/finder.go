@@ -128,6 +128,10 @@ func (f *Finder) GetAllContainers() ([]*Container, error) {
 					}
 					container.CRIType = CRI_TYPE_CONTAINERD
 				}
+				if !strings.HasSuffix(container.LogPath, ".log") {
+					// Skip non-log files
+					continue
+				}
 				containers = append(containers, container)
 			}
 		}

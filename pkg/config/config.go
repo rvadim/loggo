@@ -23,6 +23,7 @@ type Config struct {
 	AMQPRoutingKey         string
 	RedisURL               string
 	RedisKey               string
+	RedisPassword          string
 	Transport              string
 	DataCenter             string
 	Purpose                string
@@ -51,6 +52,10 @@ func GetConfig() *Config {
 		Default("logs").
 		Envar("REDIS_KEY").
 		StringVar(&c.RedisKey)
+	kingpin.Flag("redis-password", "Redis password").
+		Default("secret").
+		Envar("REDIS_PASSWORD").
+		StringVar(&c.RedisPassword)
 	kingpin.Flag("amqp-url", "Where to send log messages").
 		Default("amqp://localhost/").
 		Envar("AMQP_URL").
@@ -137,6 +142,9 @@ func (c *Config) ToString() string {
 	output := "\n"
 	for i := 0; i < v.NumField(); i++ {
 		if v.Field(i).CanInterface() {
+			if v.Type().Field(i).Name == "RedisPassword" {
+				continue
+			}
 			output += fmt.Sprintf("%s:\t\t'%v'\n", v.Type().Field(i).Name, v.Field(i).Interface())
 		}
 	}

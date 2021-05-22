@@ -35,7 +35,7 @@ func main() {
 			log.Fatalf("Unable to init firehose client, %s", err)
 		}
 	} else {
-		broker, err = redisclient.New(c.RedisURL, c.RedisKey)
+		broker, err = redisclient.New(c.RedisURL, c.RedisKey, c.RedisPassword)
 		if err != nil {
 			log.Fatalf("Unable to init redis client. %s", err)
 		}

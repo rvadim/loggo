@@ -1,3 +1,6 @@
+
+export REDIS_PASSWORD=test
+
 install-linter:
 	go get github.com/golangci/golangci-lint/cmd/golangci-lint@v1.31.0
 
@@ -16,7 +19,7 @@ functional-test: cleanup-docker
 	timeout --preserve-status 10 ./build/loggo --logs-path="pkg/tests/fixtures/pods" --position-file-path="loggo-logs.pos" --reader-max-chunk=2 && echo "ok" || echo "bad"
 	./build/tests
 
-functional-test-redis: cleanup-docker
+functional-test-redis: cleanup-docker build build-test
 	rm -f loggo-logs.pos
 	docker-compose up -d redis
 	timeout --preserve-status 10 ./build/loggo --transport="redis" --logs-path="pkg/tests/fixtures/pods" --position-file-path="loggo-logs.pos" --reader-max-chunk=2 && echo "ok" || echo "bad"
