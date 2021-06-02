@@ -123,6 +123,7 @@ func (r *Reader) ProcessLogFile() {
 		_, err := os.Stat(r.filePath)
 		if err != nil && !lastIteration {
 			log.Printf("File not present on fs, remove '%s' from registry", r.filePath)
+			metrics.LogMessageCount.DeleteLabelValues(namespace, podName, containerName)
 			r.registry.Delete(r.filePath)
 			return
 		}
@@ -150,6 +151,7 @@ func (r *Reader) ProcessLogFile() {
 		r.pos = pos
 		if len(data) < r.maxChunk {
 			if lastIteration {
+				metrics.LogMessageCount.DeleteLabelValues(namespace, podName, containerName)
 				r.registry.Delete(r.filePath)
 				return
 			}
@@ -166,6 +168,7 @@ func (r *Reader) ProcessLogFile() {
 			}
 			if event.Op == fsnotify.Remove {
 				// FIXME Never executed due to https://github.com/fsnotify/fsnotify/issues/194
+				metrics.LogMessageCount.DeleteLabelValues(namespace, podName, containerName)
 				r.registry.Delete(r.filePath)
 				return
 			}
